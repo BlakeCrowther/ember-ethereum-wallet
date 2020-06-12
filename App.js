@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView, View, Text, StatusBar, StyleSheet} from 'react-native';
+import {SafeAreaView, StatusBar, StyleSheet} from 'react-native';
 
 import EthereumWallet from './components/EthereumWallet/EthereumWallet';
 
