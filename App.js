@@ -3,6 +3,8 @@ import {SafeAreaView, StatusBar, StyleSheet} from 'react-native';
 
 import EthereumWallet from './components/EthereumWallet/EthereumWallet';
 
+// import './shim.js'; 
+
 const App = () => {
   return (
     <>

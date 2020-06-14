@@ -1,23 +1,27 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import DeviceInfo from 'react-native-device-info';
+// import { generateSecureRandom } from 'react-native-securerandom';
 
 import styles from './EthereumWallet.styles';
 
+// If the rn-nodeify method for using react-native-crypto didn't give 
+// build failures then I would import the shim file I had deleted, and 
+// uncomment some of the code that would satisfy the general requirements 
+// provided by the assignment.
+// import '../../shim.js';
+
+// I might be wrong but I was getting errors that the eth-wallet-light 
+// package still had a peer dependency on 'crypto'.
 // const wallet = require('eth-wallet-light');
 
 export default function EthereumWallet() {
   const [publicKey, setPublicKey] = useState('');
   const [privateKey, setPrivateKey] = useState('');
 
-  const password = 'password';
-
-  // async () => {
-
-  // };
-
   useEffect(() => {
+    // Checks for a public and private key in AsyncStorage if it exists, 
+    // otherwise it calls getNewAddress to generate one. 
     const checkStorage = async () => {
       try {
         const storedPublicKey = await AsyncStorage.getItem('asyncPublicKey');
@@ -35,16 +39,20 @@ export default function EthereumWallet() {
     checkStorage();
   }, []);
 
+  // This asynchronous function should generate a new Ethereum address
+  // and its associated private key and store them in AsyncStorage. Currently 
+  // generates random placeholder due to issues previously mentioned. 
   getNewAddress = async () => {
     try {
-      // var keystore = await new wallet.Keystore()
-      //   .initializFromEntropy('entropy', password)
-      //   .then(console.log('Address: ', keystore.getAddress()));
-      //   // generateSecureRandom(32
-      //   // ).then((randomBytes) =>
-      //   //   randomBytes.join('').toString(),
-      //   // ),
-      //   // console.log('privateKey: ', keystore.getPrivateKey(password));
+      // const password = 'password';
+      // var keystore = await new wallet.Keystore(generateSecureRandom(32)
+      //   .then((randomBytes) => randomBytes.join('').toString()))
+      //   .initializFromEntropy('entropy', password) 
+      //   // If going into production I might use the CSPRNG I imported to 
+      //   // generate the additional entropy. I might also consider using 
+      //   // some randomness collected from hardware sources on the device.
+      // const newPublicKey = `${keystore.getAddress()}`;
+      // const newPrivateKey = `${keystore.getPrivateKey(password)}`
       const newPublicKey = `${Math.random() * 100000000}`;
       const newPrivateKey = `${Math.random() * 100000000}`;
       setPublicKey(newPublicKey);
@@ -55,12 +63,6 @@ export default function EthereumWallet() {
       console.log(err);
     }
   }
-
-  clearAsyncStorage = async () => {
-    console.log(await AsyncStorage.getItem('asyncPublicKey'));
-    await AsyncStorage.clear();
-  }
-
 
   return (
     <View style={styles.Container}>
